@@ -80,3 +80,70 @@ document.getElementsByClassName('keyboard-key')[57].style.width = "383px";
 document.getElementsByClassName('keyboard-key')[58].style.width = "60px";
 document.getElementsByClassName('keyboard-key')[53].style.width = "103px";
 document.getElementsByClassName('keyboard-key')[59].style.width = "60px";
+
+const keyboardKeys = document.querySelectorAll('.keyboard-key');
+
+document.querySelectorAll('#virtual-keyboard .keyboard-key').forEach(function(element){
+element.onclick = function(event){
+document.querySelectorAll('#virtual-keyboard .keyboard-key').forEach(function(element){
+element.classList.remove('active');
+});
+let code = this.textContent;
+this.classList.add('active');
+}
+});
+
+// отображаем нажатые клавиши на виртуальной и физической клавиатуре
+keyboardKeys.forEach(key => {
+    key.addEventListener('click', function(event) {
+      const keyValue = event.target.textContent;
+      textarea.value += keyValue;
+    });
+});
+
+// изменение слушателя события нажатия клавиши
+document.addEventListener('keydown', function(event) {
+event.preventDefault();
+const keyPressed = event.key;
+const textarea = document.getElementById('textarea');
+switch(keyPressed) {
+      case 'ArrowUp':
+        textarea.value += '▲';
+        break;
+      case 'ArrowDown':
+        textarea.value += '▼';
+        break;
+      case 'ArrowLeft':
+        textarea.value += '◄';
+        break;
+      case 'ArrowRight':
+        textarea.value += '►';
+        break;
+        case 'Enter':
+        textarea.value += '\n';
+        break;
+        case 'Tab':
+        textarea.value += '\t';
+        break;
+        default:
+        textarea.value += keyPressed;
+    }
+});
+  //прослушиваем событие 
+document.addEventListener('keydown', function(event) {
+    event.preventDefault();
+    const keyPressed = event.key;
+    const keyLocation = event.location;
+    const keyCode = event.keyCode;
+    // Shift key
+    if (keyPressed === "Shift") {
+      shiftActive = true;
+      document.querySelectorAll('.keyboard-key').forEach(key => {
+        if (key.textContent.length === 1 && key.textContent.toUpperCase() === key.textContent) {
+          key.textContent = key.textContent.toLowerCase();
+        } else if (key.textContent.length === 1 && key.textContent.toLowerCase() === key.textContent) {
+          key.textContent = key.textContent.toUpperCase();
+        }
+      });
+    }
+})
