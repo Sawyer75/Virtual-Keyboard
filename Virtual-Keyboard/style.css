@@ -24,7 +24,27 @@
 }
 
 #textarea {
-  width: 925px;
-  height: 100px;
+  display: block;
+  width: 900px;
+  height: 200px;
+  margin: 10px auto 10px;
+  padding: 10px;
+}
+
+#virtual-keyboard {
+  width: 950px;
+  margin: 0 auto;
+  
+}
+.title {
+  font-size: 30px;
+  margin: 10px auto;
+  text-align: center;
+  color: dimgrey;
   margin-bottom: 20px;
+}
+.description, .language {
+  font-size: 20px;
+  margin: 10px auto;
+  text-align: center;
 }
