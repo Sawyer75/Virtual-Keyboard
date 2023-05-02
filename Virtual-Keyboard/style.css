@@ -32,9 +32,12 @@
 }
 
 #virtual-keyboard {
-  width: 950px;
+  width: 940px;
   margin: 0 auto;
-  
+  padding-left: 0;
+  padding-bottom: 0;
+  border: 3px solid #222222;
+  border-radius: 5px;
 }
 .title {
   font-size: 30px;
