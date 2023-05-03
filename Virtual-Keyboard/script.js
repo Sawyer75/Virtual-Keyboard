@@ -18,7 +18,8 @@ conteiner.appendChild(textarea);
 
 // добавляем контейнер для виртуальной клавиатуры
 const keyboardDiv = document.createElement('div');
-keyboardDiv.setAttribute('id', 'virtual-keyboard');
+keyboardDiv.setAttribute('class', 'virtual-keyboard');
+keyboardDiv.setAttribute('id','virtual-keyboard')
 conteiner.appendChild(keyboardDiv);
 
 const description = document.createElement('p');
@@ -93,6 +94,21 @@ this.classList.add('active');
 }
 });
 
+document.addEventListener('keydown', function(event) {
+  const keyPressed = event.key;
+  // Get all the keys on the virtual keyboard
+  const virtualKeys = document.querySelectorAll('.keyboard-key');
+  // Loop through all the keys and highlight the one that matches the pressed key
+  virtualKeys.forEach(key => {
+    if (key.textContent === keyPressed) {
+      key.classList.add('active');
+    } else {
+      key.classList.remove('active');
+    }
+  });
+});
+
+
 // отображаем нажатые клавиши на виртуальной и физической клавиатуре
 keyboardKeys.forEach(key => {
     key.addEventListener('click', function(event) {
@@ -101,41 +117,10 @@ keyboardKeys.forEach(key => {
     });
 });
 
-// изменение слушателя события нажатия клавиши
-document.addEventListener('keydown', function(event) {
-event.preventDefault();
-const keyPressed = event.key;
-const textarea = document.getElementById('textarea');
-switch(keyPressed) {
-      case 'ArrowUp':
-        textarea.value += '▲';
-        break;
-      case 'ArrowDown':
-        textarea.value += '▼';
-        break;
-      case 'ArrowLeft':
-        textarea.value += '◄';
-        break;
-      case 'ArrowRight':
-        textarea.value += '►';
-        break;
-        case 'Enter':
-        textarea.value += '\n';
-        break;
-        case 'Tab':
-        textarea.value += '\t';
-        break;
-        default:
-        textarea.value += keyPressed;
-    }
-});
-  //прослушиваем событие 
+  //прослушиваем события 
 document.addEventListener('keydown', function(event) {
     event.preventDefault();
     const keyPressed = event.key;
-    const keyLocation = event.location;
-    const keyCode = event.keyCode;
-    // Shift key
     if (keyPressed === "Shift") {
       shiftActive = true;
       document.querySelectorAll('.keyboard-key').forEach(key => {
@@ -147,3 +132,41 @@ document.addEventListener('keydown', function(event) {
       });
     }
 })
+
+document.addEventListener('keydown', function(event) {
+  event.preventDefault();
+  const keyPressed = event.key;
+  // const textarea = document.getElementById('textarea');
+  switch (keyPressed) {
+    case 'ArrowUp':
+        textarea.value += '▲';
+        break;
+      case 'ArrowDown':
+        textarea.value += '▼';
+        break;
+      case 'ArrowLeft':
+        textarea.value += '◄';
+        break;
+      case 'ArrowRight':
+        textarea.value += '►';
+        break;
+    case 'Enter':
+      textarea.value += '\n';
+      break;
+    case 'Tab':
+      textarea.value += '    ';
+      break;
+    case 'Backspace':
+      textarea.value = textarea.value.substring(0, textarea.value.length - 1);
+      break;
+    case 'Delete':
+      textarea.value = textarea.value.substring(0, textarea.selectionStart) + textarea.value.substring(textarea.selectionEnd);
+      break;
+    default:
+      if (event.ctrlKey || event.altKey || event.metaKey || event.key === 'CapsLock' || event.key === 'Shift' || event.key === 'Alt' || event.key === 'Control' || event.key === ' ') {
+        return;
+      }
+      textarea.value += keyPressed;
+      break;
+  }
+});
